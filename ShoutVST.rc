@@ -1,0 +1,115 @@
+// Microsoft Visual C++ generated resource script.
+//
+#include "resource.h"
+
+#define APSTUDIO_READONLY_SYMBOLS
+/////////////////////////////////////////////////////////////////////////////
+//
+// Generated from the TEXTINCLUDE 2 resource.
+//
+#include "afxres.h"
+
+/////////////////////////////////////////////////////////////////////////////
+#undef APSTUDIO_READONLY_SYMBOLS
+
+/////////////////////////////////////////////////////////////////////////////
+// Hungarian resources
+
+#if !defined(AFX_RESOURCE_DLL) || defined(AFX_TARG_HUN)
+#ifdef _WIN32
+LANGUAGE LANG_HUNGARIAN, SUBLANG_DEFAULT
+#pragma code_page(1250)
+#endif //_WIN32
+
+#ifdef APSTUDIO_INVOKED
+/////////////////////////////////////////////////////////////////////////////
+//
+// TEXTINCLUDE
+//
+
+1 TEXTINCLUDE 
+BEGIN
+    "resource.h\0"
+END
+
+2 TEXTINCLUDE 
+BEGIN
+    "#include ""afxres.h""\r\n"
+    "\0"
+END
+
+3 TEXTINCLUDE 
+BEGIN
+    "\r\n"
+    "\0"
+END
+
+#endif    // APSTUDIO_INVOKED
+
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// Dialog
+//
+
+IDD_SHOUTVST_CONFIG DIALOGEX 0, 0, 392, 224
+STYLE DS_SETFONT | DS_FIXEDSYS | WS_CHILD | WS_SYSMENU
+FONT 8, "MS Shell Dlg", 400, 0, 0x1
+BEGIN
+    EDITTEXT        IDC_HOSTNAME,78,18,102,12,ES_AUTOHSCROLL
+    GROUPBOX        "Connection info:",IDC_STATIC,6,6,186,90
+    RTEXT           "Hostname:",IDC_STATIC,12,19,60,8
+    EDITTEXT        IDC_PORT,78,30,102,12,ES_AUTOHSCROLL | ES_NUMBER
+    RTEXT           "Port:",IDC_STATIC,12,32,60,8
+    EDITTEXT        IDC_USERNAME,78,42,102,12,ES_AUTOHSCROLL
+    RTEXT           "Username:",IDC_STATIC,12,43,60,8
+    EDITTEXT        IDC_PASSWORD,78,54,102,12,ES_AUTOHSCROLL
+    RTEXT           "Password:",IDC_STATIC,12,56,60,8
+    EDITTEXT        IDC_MOUNTFILENAME,78,66,102,12,ES_AUTOHSCROLL
+    RTEXT           "Mount filename:",IDC_STATIC,12,67,60,8
+    RTEXT           "Protocol:",IDC_STATIC,12,80,60,8
+    COMBOBOX        IDC_PROTOCOL,78,78,102,100,CBS_DROPDOWNLIST | WS_VSCROLL | WS_TABSTOP
+    PUSHBUTTON      "&Connect",IDC_CONNECT,132,102,60,18
+    PUSHBUTTON      "&Disconnect",IDC_DISCONNECT,198,102,60,18
+    EDITTEXT        IDC_LOG,6,126,378,90,ES_MULTILINE | ES_AUTOVSCROLL | ES_AUTOHSCROLL | ES_READONLY | WS_VSCROLL
+    GROUPBOX        "Encoder info:",IDC_STATIC,198,6,186,90
+    RTEXT           "Encoder:",IDC_STATIC,210,20,60,8
+    COMBOBOX        IDC_ENCODER,276,18,102,100,CBS_DROPDOWNLIST | WS_VSCROLL | WS_TABSTOP
+    CONTROL         "",IDC_QUALITY,"msctls_trackbar32",TBS_AUTOTICKS | TBS_BOTH | WS_TABSTOP,276,36,102,24
+    RTEXT           "Quality:",IDC_STATIC,210,43,60,8
+END
+
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// DESIGNINFO
+//
+
+#ifdef APSTUDIO_INVOKED
+GUIDELINES DESIGNINFO 
+BEGIN
+    IDD_SHOUTVST_CONFIG, DIALOG
+    BEGIN
+        LEFTMARGIN, 7
+        RIGHTMARGIN, 385
+        TOPMARGIN, 7
+        BOTTOMMARGIN, 217
+    END
+END
+#endif    // APSTUDIO_INVOKED
+
+#endif    // Hungarian resources
+/////////////////////////////////////////////////////////////////////////////
+
+
+
+#ifndef APSTUDIO_INVOKED
+/////////////////////////////////////////////////////////////////////////////
+//
+// Generated from the TEXTINCLUDE 3 resource.
+//
+
+
+/////////////////////////////////////////////////////////////////////////////
+#endif    // not APSTUDIO_INVOKED
+
