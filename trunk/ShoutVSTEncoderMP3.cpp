@@ -115,8 +115,8 @@ bool ShoutVSTEncoderMP3::Process( float **inputs, long sampleFrames )
 
     SHORT * p = pWAVBuffer + dwSamplesSoFar * STEREO;
     for (int i=0; i < nSamplesProcessed; i++) {
-      *(p++) = (SHORT)(inputs[0][nInputPointer] * 32767.0f);
-      *(p++) = (SHORT)(inputs[1][nInputPointer] * 32767.0f);
+      *(p++) = (SHORT)(min(1.0f,max(-1.0f,inputs[0][nInputPointer])) * 32767.0f);
+      *(p++) = (SHORT)(min(1.0f,max(-1.0f,inputs[1][nInputPointer])) * 32767.0f);
       nInputPointer++;
     }
     dwSamplesSoFar += nSamplesProcessed;
