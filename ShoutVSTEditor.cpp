@@ -12,14 +12,16 @@ ShoutVSTEditor::ShoutVSTEditor( AudioEffectX *effect ) : AEffEditor(effect)
   nPort = 8000;
   strncpy(szUsername,"source",MAX_PATH);
   strncpy(szPassword,"hackme",MAX_PATH);
-  strncpy(szMountpoint,"/example.mp3",MAX_PATH);
+  strncpy(szMountpoint,"/shoutvst.mp3",MAX_PATH);
   nProtocol = SHOUT_PROTOCOL_HTTP;
   nEncoder = SHOUT_FORMAT_MP3;
 
   pVST = (ShoutVST*)effect;
   pVST->setEditor(this);
-  if(!pVST->CanDoMP3())
+  if(!pVST->CanDoMP3()) {
+    strncpy(szMountpoint,"/shoutvst.ogg",MAX_PATH);
     nEncoder = SHOUT_FORMAT_OGG;
+  }
 
   szLog = new char[1];
   *szLog = 0;
@@ -150,7 +152,8 @@ void ShoutVSTEditor::AppendLog( char * sz )
   szLog = p;
 
   SetWindowText(GetDlgItem(hwndDialog,IDC_LOG),szLog);
-  //SendDlgItemMessage(hwndDialog,IDC_LOG,SBM_SETPOS
+
+  // TODO: scroll to bottom
 }
 
 void ShoutVSTEditor::RefreshData()
