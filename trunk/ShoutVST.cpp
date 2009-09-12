@@ -69,11 +69,11 @@ void ShoutVST::setParameter (long index, float value)
 {
   bool bShouldConnect = (value >= 0.5);
 
-  if (bShouldConnect == bStreamConnected) return;
-
   {
     CLock lock(&critsec);
-    
+
+    if (bShouldConnect == bStreamConnected) return;
+
     switch (pEditor->nEncoder) {
       case SHOUT_FORMAT_OGG:
         {
@@ -100,13 +100,14 @@ void ShoutVST::setParameter (long index, float value)
       Log("Stopping ICE...\r\n");
       StopICECasting();
     }
+
+    Log("setParameter succeeded!\r\n");
+
+    bStreamConnected = bShouldConnect;
+
+    pEditor->DisableAccordingly();
   }
-  
-  Log("setParameter succeeded!\r\n");
-
-  bStreamConnected = bShouldConnect;
-
-  pEditor->DisableAccordingly();
+ 
 }
 
 float ShoutVST::getParameter (long index)
