@@ -11,6 +11,7 @@ extern HINSTANCE hInstance;
 bool ShoutVSTEncoderMP3::Preload()
 {
   // try 1: check in default dirs
+
   hDLL = LoadLibrary("lame_enc.dll"); 
 
   char szVstPath[MAX_PATH];
@@ -43,6 +44,8 @@ bool ShoutVSTEncoderMP3::Preload()
 
   if (!hDLL) return false;
 
+  pVST->Log("[mp3] Lame_enc.dll found!\r\n");
+
   beInitStream = (BEINITSTREAM) GetProcAddress(hDLL, TEXT_BEINITSTREAM);
   beEncodeChunk = (BEENCODECHUNK) GetProcAddress(hDLL, TEXT_BEENCODECHUNK);
   beDeinitStream  = (BEDEINITSTREAM) GetProcAddress(hDLL, TEXT_BEDEINITSTREAM);
@@ -51,8 +54,10 @@ bool ShoutVSTEncoderMP3::Preload()
   beWriteVBRHeader= (BEWRITEVBRHEADER) GetProcAddress(hDLL,TEXT_BEWRITEVBRHEADER);
   beWriteInfoTag  = (BEWRITEINFOTAG) GetProcAddress(hDLL,TEXT_BEWRITEINFOTAG); 
 
-  if(!beInitStream || !beEncodeChunk || !beDeinitStream || !beCloseStream || !beVersion || !beWriteVBRHeader) 
+  if(!beInitStream || !beEncodeChunk || !beDeinitStream || !beCloseStream || !beVersion || !beWriteVBRHeader) {
+    pVST->Log("[mp3] Imported function from lame.dll is missing!\r\n");
     return false;
+  }
 
   return true;
 }
