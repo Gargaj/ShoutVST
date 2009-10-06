@@ -1,4 +1,6 @@
 #include <stdio.h>
+#include <windows.h>
+#include <tchar.h>
 #include "ShoutVST.h"
 #include "ShoutVSTEncoderMP3.h"
 
@@ -8,21 +10,38 @@
 extern HINSTANCE hInstance;
 bool ShoutVSTEncoderMP3::Preload()
 {
-  hDLL = LoadLibrary("lame_enc.dll");
+  // try 1: check in default dirs
+  hDLL = LoadLibrary("lame_enc.dll"); 
 
+  char szVstPath[MAX_PATH];
+
+  // try 2: check next to ourselves (the dll)
   if (!hDLL) {
-    char s[MAX_PATH];
-    GetModuleFileName(hInstance,s,MAX_PATH);
-    if (strrchr(s,'\\')) {
-      *strrchr(s,'\\') = 0;
+    GetModuleFileName(hInstance,szVstPath,MAX_PATH);
+    if (strrchr(szVstPath,'\\')) {
+      *strrchr(szVstPath,'\\') = 0;
     }
-    strcat(s,"\\lame_enc.dll");
+    strcat(szVstPath,"\\lame_enc.dll");
 
-    hDLL = LoadLibrary(s);
-
-    if (!hDLL)
-      return false;
+    hDLL = LoadLibrary(szVstPath);
   }
+  if (!hDLL) {
+    HKEY hk = NULL;
+
+    // try 3: check in the defaut vst dir
+    if(RegOpenKeyEx(HKEY_LOCAL_MACHINE,_T("SOFTWARE\\VST"),0,KEY_READ,&hk) == ERROR_SUCCESS) {
+      ZeroMemory(szVstPath,MAX_PATH);
+      DWORD type = 0, size = MAX_PATH;
+      if (RegQueryValueEx(hk,_T("VSTPluginsPath"),NULL,&type,(LPBYTE)szVstPath,&size) == ERROR_SUCCESS && type != REG_SZ) {
+        strcat(szVstPath,"\\lame_enc.dll");
+        hDLL = LoadLibrary(szVstPath);
+      }
+      RegCloseKey(hk);
+      
+    }
+  }
+
+  if (!hDLL) return false;
 
   beInitStream = (BEINITSTREAM) GetProcAddress(hDLL, TEXT_BEINITSTREAM);
   beEncodeChunk = (BEENCODECHUNK) GetProcAddress(hDLL, TEXT_BEENCODECHUNK);
