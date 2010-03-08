@@ -1,9 +1,6 @@
 #include "ShoutVSTEncoder.h"
 
-ShoutVSTEncoder::ShoutVSTEncoder(void)
+ShoutVSTEncoder::ShoutVSTEncoder( ShoutVST * p )
 {
-}
-
-ShoutVSTEncoder::~ShoutVSTEncoder(void)
-{
+  pVST = p;
 }

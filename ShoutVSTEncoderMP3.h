@@ -6,8 +6,9 @@ class ShoutVSTEncoderMP3 :
   public ShoutVSTEncoder
 {
 public:
+  ShoutVSTEncoderMP3( ShoutVST * p );
   bool Preload();
-  bool Initialize(ShoutVST * p);
+  bool Initialize();
   bool Close();
   bool Process( float **inputs, long sampleFrames );
 
@@ -30,7 +31,4 @@ protected:
   SHORT * pWAVBuffer; 
 
   bool bInitialized;
-
-  ShoutVST * pVST;
-
 };

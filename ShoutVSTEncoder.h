@@ -8,7 +8,11 @@ class ShoutVST;
 class ShoutVSTEncoder
 {
 public:
-  virtual bool Initialize(ShoutVST *) = NULL;
+  ShoutVSTEncoder(ShoutVST *);
+  virtual bool Initialize() = NULL;
   virtual bool Close() = NULL;
   virtual bool Process( float **inputs, long sampleFrames ) = NULL;
+
+protected:
+  ShoutVST * pVST;
 };

@@ -17,7 +17,9 @@ public:
 };
 
 ShoutVST::ShoutVST (audioMasterCallback audioMaster)
-  : AudioEffectX (audioMaster, 1, 1)  // 1 program, 1 parameter only
+  : AudioEffectX (audioMaster, 1, 1),  // 1 program, 1 parameter only
+  encMP3(this),
+  encOGG(this)
 {
   InitializeCriticalSection(&critsec);
   pEditor = NULL;
@@ -93,7 +95,7 @@ void ShoutVST::setParameter (long index, float value)
         return;
       }
       Log("Initializing the encoder...\r\n");
-      if (!encSelected->Initialize(this)) return;
+      if (!encSelected->Initialize()) return;
     } else {
       Log("Stopping the encoder...\r\n");
       encSelected->Close();
