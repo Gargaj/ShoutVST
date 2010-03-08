@@ -5,13 +5,13 @@
 class ShoutVSTEncoderOGG : public ShoutVSTEncoder
 {
 public:
-  bool Initialize(ShoutVST * p);
+  ShoutVSTEncoderOGG( ShoutVST * p );
+  bool Initialize();
   bool Close();
   bool Process( float **inputs, long sampleFrames );
   
 protected:
   bool SendOGGPageToICE( ogg_page * og );
-
   ogg_stream_state os; /* take physical pages, weld into a logical
                        stream of packets */
   ogg_page         og; /* one Ogg bitstream page.  Vorbis packets are inside */
@@ -25,5 +25,4 @@ protected:
   vorbis_block     vb; /* local working space for packet->PCM decode */ 
 
   bool bInitialized;
-  ShoutVST * pVST;
 };

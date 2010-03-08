@@ -7,6 +7,12 @@
 // note to self
 #define STEREO 2
 
+ShoutVSTEncoderMP3::ShoutVSTEncoderMP3( ShoutVST * p )
+: ShoutVSTEncoder(p)
+{
+
+}
+
 extern HINSTANCE hInstance;
 bool ShoutVSTEncoderMP3::Preload()
 {
@@ -62,11 +68,10 @@ bool ShoutVSTEncoderMP3::Preload()
   return true;
 }
 
-bool ShoutVSTEncoderMP3::Initialize( ShoutVST * p )
+bool ShoutVSTEncoderMP3::Initialize()
 {
   bInitialized = false;
 
-  pVST = p;
   hbeStream = NULL;
 
   BE_VERSION v;

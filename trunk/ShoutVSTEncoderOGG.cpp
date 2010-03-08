@@ -1,10 +1,15 @@
 #include "ShoutVST.h"
 #include "ShoutVSTEncoderOGG.h"
 
-bool ShoutVSTEncoderOGG::Initialize(ShoutVST * p)
+ShoutVSTEncoderOGG::ShoutVSTEncoderOGG( ShoutVST * p )
+: ShoutVSTEncoder(p)
+{
+
+}
+
+bool ShoutVSTEncoderOGG::Initialize()
 {
   bInitialized = false;
-  pVST = p;
 
   int ret = 0; 
 
