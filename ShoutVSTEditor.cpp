@@ -16,6 +16,8 @@ ShoutVSTEditor::ShoutVSTEditor( AudioEffectX *effect ) : AEffEditor(effect)
   nProtocol = SHOUT_PROTOCOL_HTTP;
   nEncoder = SHOUT_FORMAT_MP3;
 
+  nQuality = 2;
+
   pVST = (ShoutVST*)effect;
   pVST->setEditor(this);
   if(!pVST->CanDoMP3()) {
@@ -85,19 +87,36 @@ INT_PTR ShoutVSTEditor::DialogProc( HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM 
         //SendDlgItemMessage(hWnd,IDC_ENCODER,CB_SETMINVISIBLE,10,NULL);
 
         SendDlgItemMessage(hWnd,IDC_QUALITY,TBM_SETRANGE,TRUE,MAKELONG(0,10));
-        SendDlgItemMessage(hWnd,IDC_QUALITY,TBM_SETPOS,TRUE,2);
+        SendDlgItemMessage(hWnd,IDC_QUALITY,TBM_SETPOS,TRUE,nQuality);
 
         ShowWindow(hWnd,SW_SHOW);
 
         DisableAccordingly();
         return TRUE;
       } break;
+    case WM_DESTROY:
+      {
+        RefreshData();
+      } break;
     case WM_COMMAND:
       {
         switch( LOWORD(wParam) ) {
           case IDC_ENCODER:
             {
-              // todo: change mount file name since winamp is being a pissy about it >:(
+              char sz[MAX_PATH];
+              GetWindowText(GetDlgItem(hwndDialog,IDC_MOUNTFILENAME),sz,MAX_PATH);
+              if (strchr(sz,'.'))
+                *strrchr(sz,'.') = '\0';
+              switch (SendDlgItemMessage(hwndDialog,IDC_ENCODER ,CB_GETCURSEL,NULL,NULL))
+              {
+                case SHOUT_FORMAT_OGG:
+                  strcat(sz,".ogg");
+                  break;
+                case SHOUT_FORMAT_MP3:
+                  strcat(sz,".mp3");
+                  break;
+              }
+              SetWindowText(GetDlgItem(hwndDialog,IDC_MOUNTFILENAME),sz);
             } break;
           case IDC_CONNECT:
             {
@@ -128,7 +147,7 @@ long ShoutVSTEditor::open( void *ptr )
 
 long ShoutVSTEditor::getRect(ERect **erect)
 {
-  pVST->Log("[editor] getRect\r\n");
+//  pVST->Log("[editor] getRect\r\n");
   RECT rc;
   GetWindowRect(hwndDialog,&rc);
   static ERect r = { 0, 0, 0, 0 };
@@ -170,13 +189,12 @@ void ShoutVSTEditor::RefreshData()
 
   nProtocol = SendDlgItemMessage(hwndDialog,IDC_PROTOCOL,CB_GETCURSEL,NULL,NULL);
   nEncoder  = SendDlgItemMessage(hwndDialog,IDC_ENCODER ,CB_GETCURSEL,NULL,NULL);
-
+  nQuality  = SendDlgItemMessage(hwndDialog,IDC_QUALITY ,TBM_GETPOS,NULL,NULL);
 }
 
 void ShoutVSTEditor::DisableAccordingly()
 {
-
-//  pVST->Log("[editor] disabling for %08X\r\n",hWnd);
+//  pVST->Log("[editor] disabling\r\n");
   EnableWindow(GetDlgItem(hwndDialog,IDC_HOSTNAME), !pVST->IsConnected());
   EnableWindow(GetDlgItem(hwndDialog,IDC_PORT), !pVST->IsConnected());
   EnableWindow(GetDlgItem(hwndDialog,IDC_USERNAME), !pVST->IsConnected());
