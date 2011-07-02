@@ -37,5 +37,7 @@ protected:
   HWND hwndParent;
   HWND hwndDialog;
 
+  int nQuality;
+
   char * szLog;
 };
