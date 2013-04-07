@@ -44,6 +44,14 @@ protected:
   bool InitializeICECasting();
   void ProcessICECasting(float **inputs, long sampleFrames);
   void StopICECasting();
+
+  virtual long getChunk( void** data, bool isPreset = false );
+
+  virtual long setChunk( void* data, long byteSize, bool isPreset = false );
+
+  void AppendSerialize( char ** szString, char * szKey, char * szValue );
+  void AppendSerialize( char ** szString, char * szKey, int szValue );
+  
   bool bCanDoMP3;
 
   ShoutVSTEncoder * encSelected;

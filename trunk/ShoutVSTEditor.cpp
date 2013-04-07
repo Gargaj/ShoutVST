@@ -118,6 +118,10 @@ INT_PTR ShoutVSTEditor::DialogProc( HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM 
               }
               SetWindowText(GetDlgItem(hwndDialog,IDC_MOUNTFILENAME),sz);
             } break;
+          case IDC_QUALITY:
+            {
+              nQuality = SendDlgItemMessage(hwndDialog,IDC_QUALITY,TBM_GETPOS,NULL,NULL);
+            } break;
           case IDC_CONNECT:
             {
               RefreshData();
@@ -210,5 +214,11 @@ void ShoutVSTEditor::DisableAccordingly()
 
 int ShoutVSTEditor::GetQuality()
 {
-  return SendDlgItemMessage(hwndDialog,IDC_QUALITY,TBM_GETPOS,NULL,NULL);
+  return nQuality;//SendDlgItemMessage(hwndDialog,IDC_QUALITY,TBM_GETPOS,NULL,NULL);
+}
+
+void ShoutVSTEditor::SetQuality( int q )
+{
+  nQuality = q;
+  SendDlgItemMessage(hwndDialog,IDC_QUALITY,TBM_SETPOS,TRUE,q);
 }

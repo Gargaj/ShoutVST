@@ -28,6 +28,7 @@ public:
   int nEncoder;
 
   int GetQuality();
+  void SetQuality( int q );
 
   void RefreshData();
   void DisableAccordingly();
