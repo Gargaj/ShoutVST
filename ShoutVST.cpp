@@ -29,6 +29,7 @@ ShoutVST::ShoutVST (audioMasterCallback audioMaster)
   setUniqueID('SHOU');
   canMono ();
   canProcessReplacing();
+  programsAreChunks(true);
 
   Log("shout_init()\r\n");
   shout_init();
@@ -280,7 +281,8 @@ bool ShoutVST::IsConnected()
 bool ShoutVST::SendDataToICE( unsigned char * pData, int nLen )
 {
   shout_sync(pShout);
-  if (shout_send(pShout,pData,nLen) != SHOUTERR_SUCCESS) {
+  if (shout_send(pShout,pData,nLen) != SHOUTERR_SUCCESS) 
+  {
     Log("Error sending header: %s\r\n", shout_get_error(pShout));
     return false;
   }
@@ -295,4 +297,93 @@ bool ShoutVST::CanDoMP3()
 int ShoutVST::GetQuality()
 {
   return pEditor->GetQuality();
+}
+
+void ShoutVST::AppendSerialize( char ** szString, char * szKey, char * szValue )
+{
+  char sz[1024];
+  _snprintf(sz,1024,"%s=%s\n",szKey,szValue);
+
+  int n = strlen(*szString) + strlen(sz) + 1;
+  char * szNew = new char[n];
+  strcpy(szNew,*szString);
+  strcat(szNew,sz);
+  delete[] *szString;
+  *szString = szNew;
+}
+
+void ShoutVST::AppendSerialize( char ** szString, char * szKey, int nValue )
+{
+  char sz[1024];
+  _snprintf(sz,1024,"%s=%d\n",szKey,nValue);
+
+  int n = strlen(*szString) + strlen(sz) + 1;
+  char * szNew = new char[n];
+  strncpy(szNew,*szString,n);
+  strncat(szNew,sz,n);
+  delete[] *szString;
+  *szString = szNew;
+}
+
+long ShoutVST::getChunk( void** data, bool isPreset /*= false */ )
+{
+  Log("getChunk(%d)\r\n",isPreset);
+
+  char * sz = new char[1];
+  *sz = 0;
+
+  AppendSerialize( &sz,"hostname",pEditor->szHostname);
+  AppendSerialize( &sz,"port",pEditor->nPort);
+  AppendSerialize( &sz,"username",pEditor->szUsername);
+  AppendSerialize( &sz,"password",pEditor->szPassword);
+  AppendSerialize( &sz,"mountpoint",pEditor->szMountpoint);
+  AppendSerialize( &sz,"encoder",pEditor->nEncoder);
+  AppendSerialize( &sz,"protocol",pEditor->nProtocol);
+  AppendSerialize( &sz,"quality",pEditor->GetQuality());
+
+  *data = sz;
+
+  return strlen(sz);
+}
+
+long ShoutVST::setChunk( void* data, long byteSize, bool isPreset /*= false */ )
+{
+  Log("setChunk(%d,%d)\r\n",byteSize,isPreset);
+  
+  char * sz = new char[ byteSize + 1 ];
+  ZeroMemory(sz,byteSize + 1);
+  CopyMemory(sz,data,byteSize);
+
+  char * szEnd = NULL, * p = sz;
+  while ( szEnd = strstr( p, "\n" ) )
+  {
+    char szLine[1024];
+    ZeroMemory(szLine,1024);
+    CopyMemory(szLine, p, szEnd - p);
+
+    char * szEq = strstr(szLine,"=");
+    char szKey[1024];
+    ZeroMemory(szKey,1024);
+    CopyMemory(szKey, szLine, szEq - szLine);
+
+    if (strcmp(szKey,"hostname")==0) { ZeroMemory(pEditor->szHostname,MAX_PATH); sscanf(szLine,"hostname=%1023c",pEditor->szHostname); }
+    if (strcmp(szKey,"port")==0) { sscanf(szLine,"port=%d",&pEditor->nPort); }
+    if (strcmp(szKey,"username")==0) { ZeroMemory(pEditor->szUsername,MAX_PATH); sscanf(szLine,"username=%1023c",pEditor->szUsername); }
+    if (strcmp(szKey,"password")==0) { ZeroMemory(pEditor->szPassword,MAX_PATH); sscanf(szLine,"password=%1023c",pEditor->szPassword); }
+    if (strcmp(szKey,"mountpoint")==0) { ZeroMemory(pEditor->szMountpoint,MAX_PATH); sscanf(szLine,"mountpoint=%1023c",pEditor->szMountpoint); }
+    if (strcmp(szKey,"encoder")==0) { sscanf(szLine,"encoder=%d",&pEditor->nEncoder); }
+    if (strcmp(szKey,"protocol")==0) { sscanf(szLine,"protocol=%d",&pEditor->nProtocol); }
+    if (strcmp(szKey,"quality")==0) { 
+      int q = 0; 
+      sscanf(szLine,"quality=%d",&q); 
+      pEditor->SetQuality(q); 
+    }
+
+    p = szEnd + 1;
+  }
+
+
+  delete[] sz;
+
+  return 0;
 }
