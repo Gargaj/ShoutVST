@@ -132,6 +132,13 @@ INT_PTR ShoutVSTEditor::DialogProc( HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM 
               RefreshData();
               pVST->setParameter(0, 0.0f);
             } break;
+          case IDC_SENDMETADATA:
+            {
+              char sz[2048];
+              GetWindowText(GetDlgItem(hwndDialog,IDC_METADATA),sz,2047);
+              RefreshData();
+              pVST->UpdateMetadata(sz);
+            } break;
         }
         DisableAccordingly();
       } break;
@@ -176,7 +183,9 @@ void ShoutVSTEditor::AppendLog( char * sz )
 
   SetWindowText(GetDlgItem(hwndDialog,IDC_LOG),szLog);
 
-  // TODO: scroll to bottom
+  int nLines = 1;
+  for(int n=0; szLog[n]; n++) if (szLog[n]=='\n') nLines++;
+  SendMessage(GetDlgItem(hwndDialog,IDC_LOG), EM_LINESCROLL, 0, nLines);
 }
 
 void ShoutVSTEditor::RefreshData()
@@ -208,8 +217,10 @@ void ShoutVSTEditor::DisableAccordingly()
   EnableWindow(GetDlgItem(hwndDialog,IDC_ENCODER), !pVST->IsConnected());
   EnableWindow(GetDlgItem(hwndDialog,IDC_QUALITY), !pVST->IsConnected());
 
-  EnableWindow(GetDlgItem(hwndDialog,IDC_CONNECT)   ,!pVST->IsConnected());
-  EnableWindow(GetDlgItem(hwndDialog,IDC_DISCONNECT), pVST->IsConnected());
+  EnableWindow(GetDlgItem(hwndDialog,IDC_CONNECT)     ,!pVST->IsConnected());
+  EnableWindow(GetDlgItem(hwndDialog,IDC_DISCONNECT)  , pVST->IsConnected());
+  EnableWindow(GetDlgItem(hwndDialog,IDC_SENDMETADATA), pVST->IsConnected());
+  EnableWindow(GetDlgItem(hwndDialog,IDC_METADATA),     pVST->IsConnected());
 }
 
 int ShoutVSTEditor::GetQuality()
