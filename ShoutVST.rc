@@ -13,13 +13,11 @@
 #undef APSTUDIO_READONLY_SYMBOLS
 
 /////////////////////////////////////////////////////////////////////////////
-// Hungarian resources
+// Hungarian (Hungary) resources
 
 #if !defined(AFX_RESOURCE_DLL) || defined(AFX_TARG_HUN)
-#ifdef _WIN32
 LANGUAGE LANG_HUNGARIAN, SUBLANG_DEFAULT
 #pragma code_page(1250)
-#endif //_WIN32
 
 #ifdef APSTUDIO_INVOKED
 /////////////////////////////////////////////////////////////////////////////
@@ -52,7 +50,7 @@ END
 // Dialog
 //
 
-IDD_SHOUTVST_CONFIG DIALOGEX 0, 0, 392, 224
+IDD_SHOUTVST_CONFIG DIALOGEX 0, 0, 392, 260
 STYLE DS_SETFONT | DS_FIXEDSYS | WS_CHILD | WS_SYSMENU
 FONT 8, "MS Shell Dlg", 400, 0, 0x1
 BEGIN
@@ -69,14 +67,17 @@ BEGIN
     RTEXT           "Mount filename:",IDC_STATIC,12,67,60,8
     RTEXT           "Protocol:",IDC_STATIC,12,80,60,8
     COMBOBOX        IDC_PROTOCOL,78,78,102,100,CBS_DROPDOWNLIST | WS_VSCROLL | WS_TABSTOP
-    PUSHBUTTON      "&Connect",IDC_CONNECT,132,102,60,18
-    PUSHBUTTON      "&Disconnect",IDC_DISCONNECT,198,102,60,18
-    EDITTEXT        IDC_LOG,6,126,378,90,ES_MULTILINE | ES_AUTOVSCROLL | ES_AUTOHSCROLL | ES_READONLY | WS_VSCROLL
+    PUSHBUTTON      "&Connect",IDC_CONNECT,132,138,60,18
+    PUSHBUTTON      "&Disconnect",IDC_DISCONNECT,198,138,60,18
+    EDITTEXT        IDC_LOG,6,162,378,90,ES_MULTILINE | ES_AUTOVSCROLL | ES_AUTOHSCROLL | ES_READONLY | WS_VSCROLL
     GROUPBOX        "Encoder info:",IDC_STATIC,198,6,186,90
     RTEXT           "Encoder:",IDC_STATIC,210,20,60,8
     COMBOBOX        IDC_ENCODER,276,18,102,100,CBS_DROPDOWNLIST | WS_VSCROLL | WS_TABSTOP
     CONTROL         "",IDC_QUALITY,"msctls_trackbar32",TBS_AUTOTICKS | TBS_BOTH | WS_TABSTOP,276,36,102,24
     RTEXT           "Quality:",IDC_STATIC,210,43,60,8
+    GROUPBOX        "Update metadata",IDC_STATIC,6,102,378,30
+    EDITTEXT        IDC_METADATA,12,114,306,12,ES_AUTOHSCROLL
+    PUSHBUTTON      "Send",IDC_SENDMETADATA,324,114,54,12
 END
 
 
@@ -86,19 +87,19 @@ END
 //
 
 #ifdef APSTUDIO_INVOKED
-GUIDELINES DESIGNINFO 
+GUIDELINES DESIGNINFO
 BEGIN
     IDD_SHOUTVST_CONFIG, DIALOG
     BEGIN
         LEFTMARGIN, 7
         RIGHTMARGIN, 385
         TOPMARGIN, 7
-        BOTTOMMARGIN, 217
+        BOTTOMMARGIN, 253
     END
 END
 #endif    // APSTUDIO_INVOKED
 
-#endif    // Hungarian resources
+#endif    // Hungarian (Hungary) resources
 /////////////////////////////////////////////////////////////////////////////
 
 

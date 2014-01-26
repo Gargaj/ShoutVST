@@ -3,6 +3,7 @@
 #include <tchar.h>
 #include "ShoutVST.h"
 #include "ShoutVSTEncoderMP3.h"
+#include <shlwapi.h>
 
 // note to self
 #define STEREO 2
@@ -25,10 +26,11 @@ bool ShoutVSTEncoderMP3::Preload()
   // try 2: check next to ourselves (the dll)
   if (!hDLL) {
     GetModuleFileName(hInstance,szVstPath,MAX_PATH);
+    
     if (strrchr(szVstPath,'\\')) {
       *strrchr(szVstPath,'\\') = 0;
     }
-    strcat(szVstPath,"\\lame_enc.dll");
+    PathAppend(szVstPath,"lame_enc.dll");
 
     hDLL = LoadLibrary(szVstPath);
   }
@@ -40,7 +42,7 @@ bool ShoutVSTEncoderMP3::Preload()
       ZeroMemory(szVstPath,MAX_PATH);
       DWORD type = 0, size = MAX_PATH;
       if (RegQueryValueEx(hk,_T("VSTPluginsPath"),NULL,&type,(LPBYTE)szVstPath,&size) == ERROR_SUCCESS && type != REG_SZ) {
-        strcat(szVstPath,"\\lame_enc.dll");
+        PathAppend(szVstPath,"lame_enc.dll");
         hDLL = LoadLibrary(szVstPath);
       }
       RegCloseKey(hk);

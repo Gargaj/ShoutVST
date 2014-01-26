@@ -387,3 +387,29 @@ long ShoutVST::setChunk( void* data, long byteSize, bool isPreset /*= false */ )
 
   return 0;
 }
+
+void ShoutVST::UpdateMetadata( char * sz )
+{
+  if (!pShout)
+    return;
+
+  CLock lock(&critsec);
+
+  shout_metadata_t * meta = shout_metadata_new();
+  if (!meta) return;
+
+  if (shout_metadata_add( meta, "song", sz ) != SHOUTERR_SUCCESS) 
+  {
+    Log("Error adding metadata: %s\r\n", shout_get_error(pShout));
+  }
+
+  if (shout_set_metadata( pShout, meta ) != SHOUTERR_SUCCESS) 
+  {
+    Log("Error setting metadata: %s\r\n", shout_get_error(pShout));
+  }
+
+  shout_metadata_free(meta);
+
+  Log("Set metadata to: %s\r\n", sz);
+
+}

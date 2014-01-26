@@ -37,6 +37,7 @@ public:
   bool SendDataToICE(unsigned char *, int);
   bool CanDoMP3();
   int GetQuality(); // returns 0 - 10
+  void UpdateMetadata( char * sz );
 
   CRITICAL_SECTION critsec;
 
@@ -51,7 +52,7 @@ protected:
 
   void AppendSerialize( char ** szString, char * szKey, char * szValue );
   void AppendSerialize( char ** szString, char * szKey, int szValue );
-  
+
   bool bCanDoMP3;
 
   ShoutVSTEncoder * encSelected;
