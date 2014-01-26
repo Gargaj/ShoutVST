@@ -1,0 +1,44 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 11.00
+# Visual Studio 2010
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "shoutvst", "shoutvst.vcxproj", "{96EEB87B-5E64-47F4-9C69-6C55E2BC365F}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "libshout", "libshout\libshout.vcxproj", "{27FBC417-F401-407E-896A-35792CE0E0E1}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "pthread", "pthreads.2\pthread.vcxproj", "{C9354F61-6F03-4116-A00C-ACA38544BEDD}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "libvorbis_static", "libvorbis\win32\VS2010\libvorbis\libvorbis_static.vcxproj", "{3A214E06-B95E-4D61-A291-1F8DF2EC10FD}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "libogg_static", "libogg\win32\VS2010\libogg_static.vcxproj", "{15CBFEFF-7965-41F5-B4E2-21E8795C9159}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Win32 = Debug|Win32
+		Release|Win32 = Release|Win32
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{96EEB87B-5E64-47F4-9C69-6C55E2BC365F}.Debug|Win32.ActiveCfg = Debug|Win32
+		{96EEB87B-5E64-47F4-9C69-6C55E2BC365F}.Debug|Win32.Build.0 = Debug|Win32
+		{96EEB87B-5E64-47F4-9C69-6C55E2BC365F}.Release|Win32.ActiveCfg = Release|Win32
+		{96EEB87B-5E64-47F4-9C69-6C55E2BC365F}.Release|Win32.Build.0 = Release|Win32
+		{27FBC417-F401-407E-896A-35792CE0E0E1}.Debug|Win32.ActiveCfg = Debug|Win32
+		{27FBC417-F401-407E-896A-35792CE0E0E1}.Debug|Win32.Build.0 = Debug|Win32
+		{27FBC417-F401-407E-896A-35792CE0E0E1}.Release|Win32.ActiveCfg = Release|Win32
+		{27FBC417-F401-407E-896A-35792CE0E0E1}.Release|Win32.Build.0 = Release|Win32
+		{C9354F61-6F03-4116-A00C-ACA38544BEDD}.Debug|Win32.ActiveCfg = Debug|Win32
+		{C9354F61-6F03-4116-A00C-ACA38544BEDD}.Debug|Win32.Build.0 = Debug|Win32
+		{C9354F61-6F03-4116-A00C-ACA38544BEDD}.Release|Win32.ActiveCfg = Release|Win32
+		{C9354F61-6F03-4116-A00C-ACA38544BEDD}.Release|Win32.Build.0 = Release|Win32
+		{3A214E06-B95E-4D61-A291-1F8DF2EC10FD}.Debug|Win32.ActiveCfg = Debug|Win32
+		{3A214E06-B95E-4D61-A291-1F8DF2EC10FD}.Debug|Win32.Build.0 = Debug|Win32
+		{3A214E06-B95E-4D61-A291-1F8DF2EC10FD}.Release|Win32.ActiveCfg = Release|Win32
+		{3A214E06-B95E-4D61-A291-1F8DF2EC10FD}.Release|Win32.Build.0 = Release|Win32
+		{15CBFEFF-7965-41F5-B4E2-21E8795C9159}.Debug|Win32.ActiveCfg = Debug|Win32
+		{15CBFEFF-7965-41F5-B4E2-21E8795C9159}.Debug|Win32.Build.0 = Debug|Win32
+		{15CBFEFF-7965-41F5-B4E2-21E8795C9159}.Release|Win32.ActiveCfg = Release|Win32
+		{15CBFEFF-7965-41F5-B4E2-21E8795C9159}.Release|Win32.Build.0 = Release|Win32
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal
