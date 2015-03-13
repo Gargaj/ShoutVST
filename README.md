@@ -9,9 +9,6 @@ The VST supports both OGG and MP3 encoding - for MP3 to be available, copy lame\
 
 _NOTE: the sourcetree won't compile on first click at the moment and there's no makefile - I'll do that once I sorted everything out._
 
-## Download ##
-Get the latest here: https://drive.google.com/folderview?id=0B8kDiXvciZ1adTlmeFY0d3pjQ3M&usp=sharing#list
-
 ## Current todos ##
   * Automatic update of mount file extension when switching encoder.
   * Save / Load settings from project file
